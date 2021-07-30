@@ -15,9 +15,9 @@
     <div class="container h-100">
         <div class="row justify-content-md-center h-100">
             <div class="card-wrapper">
-                <div class="brand">
-                    <img src="https://i.pinimg.com/280x280_RS/8c/c7/cf/8cc7cf8460083733c6e80bcdc42aeeff.jpg" alt="logo">
-                </div>
+<%--                <div class="brand">--%>
+<%--                    <img src="https://i.pinimg.com/280x280_RS/8c/c7/cf/8cc7cf8460083733c6e80bcdc42aeeff.jpg" alt="logo">--%>
+<%--                </div>--%>
                 <div class="card fat">
                     <div class="card-body">
                         <h4 class="card-title">Login</h4>

@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 
-@WebServlet(urlPatterns = {""})
+@WebServlet(urlPatterns = {"/"})
 public class Product extends HttpServlet {
     ArrayList<Account> list = new ArrayList<>();
 
@@ -35,7 +35,9 @@ public class Product extends HttpServlet {
             case "delete":
                 int indexDelete = Integer.parseInt(req.getParameter("index"));
                 list.remove(indexDelete);
-                resp.sendRedirect("/");
+                req.setAttribute("listAccount", list);
+                requestDispatcher = req.getRequestDispatcher("/ManageAccount.jsp");
+                requestDispatcher.forward(req, resp);
                 break;
             case "edit":
                 int indexEdit = Integer.parseInt(req.getParameter("index"));
@@ -62,22 +64,26 @@ public class Product extends HttpServlet {
             action = "";
         }
         switch (action) {
-            case "edit" :
-                //        đây là để edit tài khoản
+            case "edit":
                 String index = req.getParameter("index");
+                String id1 = req.getParameter("id");
+                String use1 = req.getParameter("use");
+                String passWord1 = req.getParameter("passWord");
+                String gmail1 = req.getParameter("gmail");
+                list.set(Integer.parseInt(index), new Account(id1, use1, passWord1, gmail1));
+                req.setAttribute("listAccount", list);
+                requestDispatcher = req.getRequestDispatcher("/ManageAccount.jsp");
+                requestDispatcher.forward(req, resp);
+                break;
+            case "create":
                 String id = req.getParameter("id");
                 String use = req.getParameter("use");
                 String passWord = req.getParameter("passWord");
                 String gmail = req.getParameter("gmail");
-
-//        nếu là null thì tạo mới tài khoản
-                if (index == null) {
-                    list.add(new Account(id, use, passWord, gmail));
-//            ngược lại sẽ edit tài khoản
-                } else {
-                    list.set(Integer.parseInt(index), new Account(id, use, passWord, gmail));
-                }
-                resp.sendRedirect("/");
+                list.add(new Account(id, use, passWord, gmail));
+                req.setAttribute("listAccount", list);
+                requestDispatcher = req.getRequestDispatcher("/ManageAccount.jsp");
+                requestDispatcher.forward(req, resp);
                 break;
             case "login":
                 boolean check = false;

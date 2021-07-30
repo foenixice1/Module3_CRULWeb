@@ -33,7 +33,7 @@
     </style>
 </head>
 <body>
-<form action="/login.jsp">
+<form action="/">
     <table style="color: blue" ; border="1px">
         <thead>
         <th colspan="6">
