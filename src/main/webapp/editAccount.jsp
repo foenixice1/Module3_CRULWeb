@@ -20,7 +20,7 @@
 
 <div class="container">
     <h2>EDIT Khách Hàng</h2>
-    <form  method="post">
+    <form action="/?action=edit"  method="post">
         <table class="table">
             <tbody>
             <tr>

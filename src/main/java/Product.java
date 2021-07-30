@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 
@@ -47,7 +46,7 @@ public class Product extends HttpServlet {
                 break;
             default:
                 req.setAttribute("listAccount", list);
-                requestDispatcher = req.getRequestDispatcher("/ManageAccount.jsp");
+                requestDispatcher = req.getRequestDispatcher("/login.jsp");
                 requestDispatcher.forward(req, resp);
 
         }
@@ -56,22 +55,6 @@ public class Product extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        đây là để edit tài khoản
-        String index = req.getParameter("index");
-        String id = req.getParameter("id");
-        String use = req.getParameter("use");
-        String passWord = req.getParameter("passWord");
-        String gmail = req.getParameter("gmail");
-
-//        nếu là null thì tạo mới tài khoản
-        if (index == null) {
-            list.add(new Account(id, use, passWord, gmail));
-//            ngược lại sẽ edit tài khoản
-        } else {
-            list.set(Integer.parseInt(index), new Account(id, use, passWord, gmail));
-        }
-        resp.sendRedirect("/");
-
 //        check đăng nhập
         String action = req.getParameter("action");
         RequestDispatcher requestDispatcher;
@@ -79,7 +62,22 @@ public class Product extends HttpServlet {
             action = "";
         }
         switch (action) {
-            case "edit":
+            case "edit" :
+                //        đây là để edit tài khoản
+                String index = req.getParameter("index");
+                String id = req.getParameter("id");
+                String use = req.getParameter("use");
+                String passWord = req.getParameter("passWord");
+                String gmail = req.getParameter("gmail");
+
+//        nếu là null thì tạo mới tài khoản
+                if (index == null) {
+                    list.add(new Account(id, use, passWord, gmail));
+//            ngược lại sẽ edit tài khoản
+                } else {
+                    list.set(Integer.parseInt(index), new Account(id, use, passWord, gmail));
+                }
+                resp.sendRedirect("/");
                 break;
             case "login":
                 boolean check = false;
@@ -94,9 +92,11 @@ public class Product extends HttpServlet {
                 }
 //                đúng thì vào quản lý tài khoản sai vào login
                 if (check) {
-                    resp.sendRedirect("/");
+                    req.setAttribute("listAccount", list);
+                    requestDispatcher = req.getRequestDispatcher("/ManageAccount.jsp");
+                    requestDispatcher.forward(req, resp);
                 } else {
-                    resp.sendRedirect("/login.jsp");
+                    resp.sendRedirect("/");
                 }
                 break;
         }
